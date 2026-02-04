@@ -4,12 +4,29 @@ This is the official draw.io MCP (Model Context Protocol) server that enables LL
 
 ## Overview
 
-This MCP server provides tools to open the draw.io web editor with:
+This repository provides two ways to enable draw.io diagram generation in Claude:
+
+1. **MCP Server** (`src/index.js`) - For Claude Desktop, requires installation
+2. **Project Instructions** (`claude-project-instructions.txt`) - For Claude.ai and Claude Desktop, no installation required
+
+Both approaches support:
 - **XML diagrams**: Native draw.io/mxGraph XML format
 - **CSV data**: Tabular data that draw.io converts to diagrams
 - **Mermaid.js**: Text-based diagram definitions
 
-## Available Tools
+## Project Instructions (No MCP)
+
+The `claude-project-instructions.txt` file contains instructions that can be pasted into a Claude Project's custom instructions. Claude then uses its built-in Python analysis tool to generate compressed draw.io URLs directly.
+
+**Advantages over MCP:**
+- No installation required
+- Works in Claude.ai (web) and Claude Desktop
+- No system access needed
+- User can inspect the URL before clicking
+
+## MCP Server
+
+## MCP Server Tools
 
 ### `open_drawio_xml`
 
@@ -18,7 +35,7 @@ Opens the draw.io editor with XML content.
 **Parameters:**
 - `content` (required): Draw.io XML content or URL to XML file
 - `lightbox` (optional): Open in read-only lightbox mode (default: false)
-- `dark` (optional): Dark mode - "auto", "true", or "false" (default: "auto")
+- `dark` (optional): Dark mode - "true" or "false" (default: false)
 
 **Example XML:**
 ```xml
@@ -40,7 +57,7 @@ Opens the draw.io editor with CSV data that gets converted to a diagram.
 **Parameters:**
 - `content` (required): CSV content or URL to CSV file
 - `lightbox` (optional): Open in read-only lightbox mode (default: false)
-- `dark` (optional): Dark mode - "auto", "true", or "false" (default: "auto")
+- `dark` (optional): Dark mode - "true" or "false" (default: false)
 
 **Example CSV (Org Chart):**
 ```csv
@@ -72,7 +89,7 @@ Opens the draw.io editor with a Mermaid.js diagram definition.
 **Parameters:**
 - `content` (required): Mermaid.js syntax or URL to Mermaid file
 - `lightbox` (optional): Open in read-only lightbox mode (default: false)
-- `dark` (optional): Dark mode - "auto", "true", or "false" (default: "auto")
+- `dark` (optional): Dark mode - "true" or "false" (default: false)
 
 **Example Mermaid:**
 ```
