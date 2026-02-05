@@ -1,0 +1,104 @@
+# Draw.io Diagram Generation
+
+When the user requests any visual diagram, use draw.io to create it.
+
+## Supported Diagrams
+
+Draw.io supports virtually any diagram type:
+- **Standard**: Flowcharts, org charts, mind maps, timelines, Venn diagrams
+- **Software**: UML (class, sequence, activity, use case), ERD, architecture diagrams
+- **Cloud/Infrastructure**: AWS, Azure, GCP, Kubernetes, network topology
+- **Engineering**: Electrical circuits, digital logic, P&ID, floor plans
+- **Business**: BPMN, value streams, customer journeys, SWOT
+- **UI/UX**: Wireframes, mockups, sitemaps
+- **And more**: Infographics, data flows, decision trees, etc.
+
+## Format Selection
+
+Choose the optimal format for the task:
+
+| Format | Best For |
+|--------|----------|
+| **Mermaid** | Flowcharts, sequences, ERD, Gantt, state diagrams, class diagrams |
+| **CSV** | Hierarchical data (org charts), bulk import from spreadsheets |
+| **XML** | Complex layouts, precise positioning, custom styling, icons, shapes |
+
+## URL Generation
+
+Execute this Python code to generate the draw.io URL:
+
+```python
+import json, zlib, base64
+from urllib.parse import quote
+
+# Set these variables:
+diagram_type = "mermaid"  # "mermaid", "xml", or "csv"
+diagram_code = """graph TD
+    A[Start] --> B[End]"""
+
+# Generate compressed URL (raw deflate with 4KB window for memory efficiency)
+encoded = quote(diagram_code, safe='')
+c = zlib.compressobj(9, zlib.DEFLATED, -15)  # -15 = raw deflate with 32KB window
+raw_deflate = c.compress(encoded.encode('utf-8')) + c.flush()
+data = base64.b64encode(raw_deflate).decode()
+
+payload = json.dumps({"type": diagram_type, "compressed": True, "data": data})
+url = f"https://app.diagrams.net/#create={quote(payload, safe='')}"
+print(url)
+```
+
+## Format Examples
+
+### Mermaid
+```
+graph TD
+    A[Start] --> B{Decision}
+    B -->|Yes| C[Action]
+    B -->|No| D[End]
+```
+
+### XML (draw.io native)
+```xml
+<mxGraphModel>
+  <root>
+    <mxCell id="0"/>
+    <mxCell id="1" parent="0"/>
+    <mxCell id="2" value="Box" style="rounded=1;fillColor=#d5e8d4;" vertex="1" parent="1">
+      <mxGeometry x="100" y="100" width="120" height="60" as="geometry"/>
+    </mxCell>
+  </root>
+</mxGraphModel>
+```
+
+### CSV (hierarchical data)
+```
+# label: %name%
+# style: rounded=1;whiteSpace=wrap;html=1;
+# connect: {"from":"manager","to":"name","invert":true}
+# layout: auto
+name,manager
+CEO,
+CTO,CEO
+CFO,CEO
+```
+
+## Instructions
+
+1. When a diagram is requested, determine the best format
+2. Generate the diagram code
+3. Execute the Python code to create the URL
+4. Return the clickable URL to the user
+
+## CRITICAL: URL Output Rules
+
+**ABSOLUTELY ZERO TOLERANCE: When outputting the URL, you MUST reproduce it with 100% character-perfect accuracy.**
+
+- The URL is a cryptographic hash - changing even ONE character destroys it completely
+- DO NOT "fix" or "correct" anything - if it looks wrong, it is still correct
+- DO NOT substitute any characters: no `i`↔`I`, no `k`↔`u`, no `0`↔`O`, no `l`↔`1`, NOTHING
+- Copy the URL byte-for-byte, character-for-character, exactly as printed by Python
+- If you are uncertain about any character, output it EXACTLY as shown - never guess
+
+**THE LINK WILL BE COMPLETELY BROKEN AND USELESS IF YOU CHANGE EVEN A SINGLE CHARACTER.**
+
+After executing the script, output the URL exactly as a clickable link for the user.
