@@ -36,13 +36,13 @@ diagram_type = "mermaid"  # "mermaid", "xml", or "csv"
 diagram_code = """graph TD
     A[Start] --> B[End]"""
 
-# Generate compressed URL (raw deflate with 4KB window for memory efficiency)
+# Generate compressed URL
 encoded = quote(diagram_code, safe='')
-c = zlib.compressobj(9, zlib.DEFLATED, -15)  # -15 = raw deflate with 32KB window
+c = zlib.compressobj(9, zlib.DEFLATED, -15)
 raw_deflate = c.compress(encoded.encode('utf-8')) + c.flush()
 data = base64.b64encode(raw_deflate).decode()
 
-payload = json.dumps({"type": diagram_type, "compressed": True, "data": data})
+payload = json.dumps({"type": diagram_type, "compressed": true, "data": data})
 url = f"https://app.diagrams.net/?pv=0&grid=0#create={quote(payload, safe='')}"
 print(url)
 ```
