@@ -14,10 +14,36 @@ When you ask the Gemini CLI agent to create a diagram, it will:
 ## Prerequisites
 
 - **[Gemini CLI](https://github.com/google/gemini-cli)** installed.
-- **[draw.io Desktop](https://github.com/jgraph/drawio-desktop/releases)** installed (required for CLI export functionality).
-- **Headless Support**: For Linux environments without a display (like remote servers or Docker), ensure `xvfb` is installed.
+- **draw.io Desktop** installed (required for CLI export functionality).
+- **xvfb** installed (for headless Linux environments).
+- **poppler-utils** installed (required for EPS export).
 
-## Installation
+## Installing Dependencies
+
+### Linux (Debian/Ubuntu)
+```bash
+# Install draw.io
+sudo apt update
+sudo apt install libasound2 -y # Dependency for draw.io
+wget https://github.com/jgraph/drawio-desktop/releases/download/v24.7.17/drawio-amd64-24.7.17.deb
+sudo apt install ./drawio-amd64-24.7.17.deb -y
+
+# Install Headless & EPS support
+sudo apt install xvfb poppler-utils -y
+```
+
+### macOS
+```bash
+brew install --cask drawio
+brew install poppler
+```
+
+### Windows
+1. Download and install [draw.io Desktop](https://github.com/jgraph/drawio-desktop/releases).
+2. Ensure `draw.io.exe` is in your PATH.
+3. For EPS support, install [MikTeX](https://miktex.org/) or [Inkscape](https://inkscape.org/).
+
+## Installation (Skill)
 
 You can install the skill directly from your local clone of this repository:
 

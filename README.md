@@ -50,9 +50,9 @@ Quick start: `npx @drawio/mcp`
 
 ## Gemini CLI Skill
 
-A native **Gemini CLI skill** that generates native `.drawio` files, with optional export to PNG, SVG, or PDF (with embedded XML). This approach brings diagramming capabilities directly to the Gemini CLI agent without needing an MCP server.
+A native **Gemini CLI skill** that generates native `.drawio` files, with optional export to PNG, SVG, PDF, or **EPS** (journal-ready). This approach brings diagramming capabilities directly to the Gemini CLI agent without needing an MCP server.
 
-Ask Gemini to create a diagram and mention a format (`png`, `svg`, or `pdf`) to trigger an automatic export using the `drawio` desktop CLI.
+Ask Gemini to create a diagram and mention a format (`png`, `svg`, `pdf`, or `eps`) to trigger an automatic export using the `drawio` desktop CLI and conversion tools.
 
 **[Full documentation →](gemini-cli-skill/README.md)**
 

@@ -21,7 +21,15 @@ Generate draw.io diagrams as native `.drawio` files. Optionally export to PNG, S
 - `png`: Viewable everywhere, editable in draw.io (uses `-e` to embed XML).
 - `svg`: Scalable, editable in draw.io (uses `-e` to embed XML).
 - `pdf`: Printable, editable in draw.io (uses `-e` to embed XML).
+- `eps`: Encapsulated PostScript for journal articles. (Note: Converts from PDF via `pdftops`).
 - `drawio`: Native XML format (default if no format specified).
+
+## Prerequisites & Installation
+
+If dependencies are missing, suggest these commands:
+- **drawio**: `sudo apt install drawio` (Linux) or download from official site.
+- **xvfb**: `sudo apt install xvfb` (Required for headless Linux).
+- **EPS Support**: `sudo apt install poppler-utils` (Provides `pdftops`).
 
 ## draw.io CLI Usage (Headless Linux)
 
@@ -29,6 +37,11 @@ Export command:
 ```bash
 xvfb-run -a drawio --no-sandbox -x -f <format> -e -b 10 -o <output> <input.drawio>
 ```
+
+**EPS Export Workflow**:
+1. Export to PDF first: `xvfb-run -a drawio --no-sandbox -x -f pdf -e -o temp.pdf input.drawio`
+2. Convert to EPS: `pdftops -eps temp.pdf output.eps`
+3. Delete `temp.pdf`.
 
 Key flags:
 - `xvfb-run -a`: Run headlessly.
