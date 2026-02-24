@@ -2,19 +2,19 @@
 
 The official [draw.io](https://www.draw.io) MCP (Model Context Protocol) server that enables LLMs to create and open diagrams in the draw.io editor.
 
-## Four Ways to Create Diagrams
+## Five Ways to Create Diagrams
 
-This repository offers four approaches for integrating draw.io with AI assistants. Pick the one that fits your setup:
+This repository offers five approaches for integrating draw.io with AI assistants. Pick the one that fits your setup:
 
-| | [MCP App Server](#mcp-app-server) | [MCP Tool Server](#mcp-tool-server) | [Skill + CLI](#skill--cli) | [Project Instructions](#alternative-project-instructions-no-mcp-required) |
-|---|---|---|---|---|
-| **How it works** | Renders diagrams inline in chat | Opens diagrams in your browser | Generates `.drawio` files, optional PNG/SVG/PDF export | Claude generates draw.io URLs via Python |
-| **Diagram output** | Interactive viewer embedded in conversation | draw.io editor in a new tab | `.drawio` or `.drawio.png` / `.svg` / `.pdf` | Clickable link to draw.io |
-| **Requires installation** | No (hosted at `mcp.draw.io`) | Yes (npm package) | Copy skill file + draw.io Desktop | No — just paste instructions |
-| **Supports XML, CSV, Mermaid** | XML only | ✅ All three | XML only (native format) | ✅ All three |
-| **Editable in draw.io** | Via "Open in draw.io" button | ✅ Directly | ✅ Directly | Via link |
-| **Works with** | Claude.ai, VS Code, any MCP Apps host | Claude Desktop, any MCP client | Claude Code | Claude.ai (with Projects) |
-| **Best for** | Inline previews in chat | Local desktop workflows | Local development workflows | Quick setup, no install needed |
+| | [MCP App Server](#mcp-app-server) | [MCP Tool Server](#mcp-tool-server) | [Gemini CLI Skill](#gemini-cli-skill) | [Skill + CLI (Claude)](#skill--cli) | [Project Instructions](#alternative-project-instructions-no-mcp-required) |
+|---|---|---|---|---|---|
+| **How it works** | Renders diagrams inline in chat | Opens diagrams in your browser | Native skill for Gemini CLI | Claude generates `.drawio` files | Claude generates draw.io URLs via Python |
+| **Diagram output** | Interactive viewer embedded in chat | draw.io editor in a new tab | `.drawio` or PNG/SVG/PDF export | `.drawio` or PNG/SVG/PDF export | Clickable link to draw.io |
+| **Requires installation** | No (hosted at `mcp.draw.io`) | Yes (npm package) | Copy skill folder + draw.io Desktop | Copy skill file + draw.io Desktop | No — just paste instructions |
+| **Supports XML, CSV, Mermaid** | XML only | ✅ All three | XML only (native format) | XML only (native format) | ✅ All three |
+| **Editable in draw.io** | Via "Open in draw.io" button | ✅ Directly | ✅ Directly | ✅ Directly | Via link |
+| **Works with** | Claude.ai, VS Code, any MCP Apps host | Claude Desktop, any MCP client | Gemini CLI | Claude Code | Claude.ai (with Projects) |
+| **Best for** | Inline previews in chat | Local desktop workflows | Gemini CLI workflows | Claude Code workflows | Quick setup, no install needed |
 
 ---
 
@@ -48,9 +48,17 @@ Quick start: `npx @drawio/mcp`
 
 ---
 
-## Skill + CLI
+## Gemini CLI Skill
 
-A Claude Code skill that generates native `.drawio` files, with optional export to PNG, SVG, or PDF (with embedded XML so the exported file remains editable in draw.io). No MCP setup required — just copy a skill file.
+A native **Gemini CLI skill** that generates native `.drawio` files, with optional export to PNG, SVG, or PDF (with embedded XML). This approach brings diagramming capabilities directly to the Gemini CLI agent without needing an MCP server.
+
+Ask Gemini to create a diagram and mention a format (`png`, `svg`, or `pdf`) to trigger an automatic export using the `drawio` desktop CLI.
+
+**[Full documentation →](gemini-cli-skill/README.md)**
+
+---
+
+## Skill + CLI (Claude)
 
 By default, the skill writes a `.drawio` file and opens it in draw.io. Mention a format in your request (`/drawio png ...`) to export using the draw.io desktop CLI with `--embed-diagram`.
 
